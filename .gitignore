@@ -1,0 +1,5 @@
+# Ignore all files in the Input_images folder
+Input_images/*
+
+# Ignore all files in the Output_images folder
+Output_images/*
