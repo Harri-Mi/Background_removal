@@ -5,7 +5,9 @@ from PIL import Image
 import io
 import zipfile
 from typing import List, Tuple
+import spaces
 
+@spaces.GPU
 def remove_background_single(image_file) -> Image.Image:
     """Remove background from a single image file"""
     if image_file is None:
@@ -25,6 +27,7 @@ def remove_background_single(image_file) -> Image.Image:
     output_image = Image.open(io.BytesIO(output_data))
     return output_image
 
+@spaces.GPU
 def remove_background_multiple(image_files) -> Tuple[str, List[Image.Image]]:
     """Remove background from multiple image files and return as zip + preview images"""
     if not image_files:
@@ -215,4 +218,4 @@ with gr.Blocks(title="Background Removal Tool", theme=gr.themes.Default()) as ap
     )
 
 if __name__ == "__main__":
-    app.launch(share=True)
+    app.launch()
