@@ -3,3 +3,18 @@ Input_images/*
 
 # Ignore all files in the Output_images folder
 Output_images/*
+
+# Gradio local files
+.gradio/
+*.pem
+
+processed_images.zip
+
+# Other common Python ignores (if not already present)
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.env
+.venv/
+venv/
