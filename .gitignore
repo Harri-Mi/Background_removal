@@ -10,6 +10,8 @@ Output_images/*
 
 processed_images.zip
 
+mcp_implemention
+
 # Other common Python ignores (if not already present)
 __pycache__/
 *.pyc

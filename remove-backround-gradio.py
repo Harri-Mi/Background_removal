@@ -4,12 +4,25 @@ from rembg import remove
 from PIL import Image
 import io
 import zipfile
-from typing import List, Tuple
+from typing import List, Tuple, Union, IO, Optional
 import spaces
 
 @spaces.GPU
-def remove_background_single(image_file) -> Image.Image:
-    """Remove background from a single image file"""
+def remove_background_single(image_file: Union[str, IO[bytes]]) -> Optional[Image.Image]:
+    """Removes the background from a single image.
+
+    This function takes an image file (either as a path or a file-like object),
+    processes it to remove the background, and returns the result as a 
+    Pillow (PIL) Image object with a transparent background.
+
+    Args:
+        image_file: The input image. Can be a path to a
+            file on disk or a file-like object (e.g., from a file upload).
+
+    Returns:
+        A Pillow Image object with the background removed, or None if 
+        the input was None.
+    """
     if image_file is None:
         return None
     
@@ -28,8 +41,25 @@ def remove_background_single(image_file) -> Image.Image:
     return output_image
 
 @spaces.GPU
-def remove_background_multiple(image_files) -> Tuple[str, List[Image.Image]]:
-    """Remove background from multiple image files and return as zip + preview images"""
+def remove_background_multiple(image_files: List[Union[str, IO[bytes]]]) -> Tuple[Optional[str], List[Image.Image]]:
+    """Removes backgrounds from multiple images and provides a zip archive.
+
+    This function processes a list of image files. For each image, it removes
+    the background, then bundles all the processed images (in PNG format)
+    into a single zip file for download. It also returns a small number of
+    processed images as previews for display in the UI.
+
+    Args:
+        image_files: A list of input images. Each element can be a 
+            path to a file or a file-like object.
+
+    Returns:
+        A tuple containing:
+            - A string with the file path to the generated zip archive. This 
+              is `None` if the input list was empty.
+            - A list of up to 5 processed Pillow Image objects to be used 
+              as a preview.
+    """
     if not image_files:
         return None, []
     
@@ -218,4 +248,7 @@ with gr.Blocks(title="Background Removal Tool", theme=gr.themes.Default()) as ap
     )
 
 if __name__ == "__main__":
-    app.launch()
+    app.launch(
+        enable_mcp=True,  # Enable MCP server
+        mcp_functions=[remove_background_single, remove_background_multiple] 
+	# Expose these functions)
