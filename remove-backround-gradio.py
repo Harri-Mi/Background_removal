@@ -248,7 +248,4 @@ with gr.Blocks(title="Background Removal Tool", theme=gr.themes.Default()) as ap
     )
 
 if __name__ == "__main__":
-    app.launch(
-        mcp_server=True,  # Enable MCP server
-        mcp_functions=[remove_background_single, remove_background_multiple]  # Expose these functions
-    )
+    app.launch(mcp_server=True)
