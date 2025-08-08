@@ -12,6 +12,10 @@ processed_images.zip
 
 mcp_implemention
 
+# Test scripts
+test_mcp_background_removal.py
+test_mcp_upload.py
+
 # Other common Python ignores (if not already present)
 __pycache__/
 *.pyc
